@@ -1,6 +1,7 @@
 name: ci
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 10 * * *' # everyday at 10am
   push:
@@ -23,3 +24,11 @@ jobs:
         run: "${GITHUB_WORKSPACE}/.github/docker-hub-pull-all.sh"
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      -
+        name: Keep scheduled workflows alive
+        uses: gautamkrishnar/keepalive-workflow@master
+        with:
+          committer_username: keepalive-bot
+          committer_email: keepalive-bot@keepalive-bot
+          commit_message: Automated commit by Keepalive Workflow to keep the repository active
+          time_elapsed: 30
