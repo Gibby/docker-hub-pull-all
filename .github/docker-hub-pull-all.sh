@@ -4,4 +4,6 @@ REPOS=$(curl -s "https://hub.docker.com/v2/repositories/$DOCKER_USERNAME/?page_s
 
 for REPO in $REPOS; do
   docker pull -a "$DOCKER_USERNAME"/"$REPO"
+  docker rm $(docker ps -aq)
+  docker rmi $(docker images -aq)
 done
